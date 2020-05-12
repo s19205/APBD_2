@@ -432,8 +432,25 @@ namespace LinqCwiczenia
             ResultsDataGridView.DataSource = result;
         }
 
+        private void button1_Click(object sender, EventArgs e)
+        {
+            var result = Emps.Select(emp => emp.Salary)
+                .Aggregate(0, (max, salary) => salary > max ? salary : max);
+            ResultsDataGridView.DataSource = result;
+        }
 
-
-
+        private void button2_Click(object sender, EventArgs e)
+        {
+            var result = Emps.SelectMany(dept => Depts, (emp, dept) =>
+            {
+                return new
+                {
+                    emp.Ename,
+                    dept.Deptno,
+                    emp.Job
+                };
+            }).ToList();
+            ResultsDataGridView.DataSource = result;
+        }
     }
 }
